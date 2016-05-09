@@ -1,3 +1,16 @@
+postgres:
+  image: postgres:9.5
+  ports:
+    - "5432:5432"
+  volumes_from:
+    - postgresdata
+
+postgresdata:
+  image: postgres:9.5
+  volumes:
+    - /var/lib/postgresql
+  command: "true"
+
 backend:
   restart: always
   build: ./backend
@@ -22,13 +35,3 @@ nginx:
     - backend
   links:
     - backend:backend
-
-postgres:
-  image: postgres:9.5
-  ports:
-    - "5432:5432"
-  volumes_from:
-    - postgresdata
-
-postgresdata:
-  image: postgres:9.5
